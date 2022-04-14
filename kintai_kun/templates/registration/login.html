@@ -8,11 +8,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="w-50 ml-auto mr-auto">
-  <form method="post" class="form-group">
-    {% csrf_token %}
-    {{form | crispy}}
-    <button type="submit" class="btn btn-success">Login</button>
-  </form>
+<div class="h-100">
+  <div class="login-box">
+    <h1 class="title">キンタイくん</h1>
+    <form method="post" class="form-group">
+      {% csrf_token %}
+      {{form | crispy}}
+      <button type="submit" class="btn btn-success">Login</button>
+    </form>
+  </div>
 </div>
 {% endblock %}

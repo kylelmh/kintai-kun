@@ -2,12 +2,22 @@
   text-align: center;
 }
 
+.login-box {
+  padding: 25px;
+  border-radius: 5%;
+  background-color: #efefef;
+  width: 50%;
+  margin: auto;
+  top: 30%;
+  position: relative;
+}
+
 .btn.-large {
   min-width: 150px;
   min-height: 100px;
   margin: 25px;
 }
 
-#datetime{
+#datetime {
   font-size: 120px;
 }
