@@ -3,7 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('shifts', views.shifts, name='shifts'),
-    path('dakoku', views.dakoku, name='dakoku')
+    path('dakoku', views.DakokuView.as_view()),
+    path('shifts', views.ShiftsView.as_view())
 ]
