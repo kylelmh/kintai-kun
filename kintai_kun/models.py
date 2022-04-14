@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class TimeStampedModel(models.Model):
-  created_on = models.DateTimeField(auto_now_add=True)
+  created_on = models.DateTimeField(default=timezone.now)
   updated_at = models.DateTimeField(auto_now=True)
   class Meta:
     abstract = True
@@ -33,12 +34,16 @@ class WorkTimestamp(TimeStampedModel):
     WORK_END = 2
     BREAK_START = 3
     BREAK_END = 4
-  stamp_type = models.IntegerField(choices=StampType.choices)
+  stamp_type = models.IntegerField(choices=StampType.choices, unique_for_date='created_on')
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
   memo = models.CharField(default='',max_length=255)
   
+  def save(self, *args, **kwargs):
+    super().validate_unique()
+    return super().save(*args, **kwargs)
+  
   def __str__(self):
-    return f'{self.employee}: {self.created_on}, {self.stamp_string}'
+    return f'{self.employee}: {self.created_on.strftime("%Y-%m-%d %H:%M:%S")}, {self.stamp_string}'
 
   @property
   def stamp_string(self):
