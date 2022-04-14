@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('', include('kintai_kun.urls')),
+    path('dakoku/', include('kintai_kun.urls')),
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
 ]
