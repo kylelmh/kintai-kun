@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% block content %}
+{% include 'header.html' %}
+<div class="ml-auto mr-auto w-100 -centering">
+  <button id='w_start' class="btn btn-success -large">出勤</button>
+  <button id='b_start' class="btn btn-info -large">休憩</button>
+  <button id='b_end' class="btn btn-dark -large">休憩終</button>
+  <button id='w_end' class="btn btn-danger -large">退勤</button>
+</div>
+<div>
+  <table class="table">
+    <tr>
+      <th>打刻履歴</th>
+    </tr>
+    {% for ts in user.employee.worktimestamp_set.all%}
+    <tr>
+      {{ts}}
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load static %}
+  <script src="{% static 'scripts/main.js' %}"></script>
+{% endblock %}
