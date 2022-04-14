@@ -27,7 +27,7 @@ class Shift(TimeStampedModel):
   start_time = models.DateTimeField
   end_time = models.DateTimeField
 
-class WorkTimeStamp(TimeStampedModel):
+class WorkTimestamp(TimeStampedModel):
   class StampType(models.IntegerChoices):
     WORK_START = 1
     WORK_END = 2
@@ -35,5 +35,13 @@ class WorkTimeStamp(TimeStampedModel):
     BREAK_END = 4
   stamp_type = models.IntegerField(choices=StampType.choices)
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
-    
+  memo = models.CharField(default='',max_length=255)
+  
+  def __str__(self):
+    return f'{self.employee}: {self.created_on}, {self.stamp_string}'
+
+  @property
+  def stamp_string(self):
+    stamps = ['出勤', '退勤', '休憩', '休憩終']
+    return stamps[self.stamp_type-1]
     

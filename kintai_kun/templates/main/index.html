@@ -12,10 +12,16 @@
   <table class="table">
     <tr>
       <th>打刻履歴</th>
+      <th></th>
     </tr>
-    {% for ts in user.employee.worktimestamp_set.all%}
+    {% for ts in timestamps%}
     <tr>
-      {{ts}}
+      <td>
+        {{ts.created_on}}
+      </td>
+      <td>
+        {{ ts.stamp_string }}
+      </td>
     </tr>
     {% endfor %}
   </table>
