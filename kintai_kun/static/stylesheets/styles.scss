@@ -2,11 +2,15 @@
   text-align: center;
 }
 
+.vh100{
+  height: 100vh;
+}
+
 .login-box {
   padding: 25px;
   border-radius: 5%;
   background-color: #efefef;
-  width: 50%;
+  width: 450px;
   margin: auto;
   top: 30%;
   position: relative;
@@ -20,6 +24,10 @@
 
 #datetime {
   font-size: 120px;
+}
+
+.container {
+  min-width: 500px;
 }
 
 .alert {
