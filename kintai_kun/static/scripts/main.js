@@ -1,4 +1,3 @@
-
 window.onload = init
 
 function getCookie(name) {
@@ -31,7 +30,7 @@ function dakoku(dakoku_type){
     {
         'type': 'POST',
         'headers': {'X-CSRFToken': csrftoken},
-        'url': '/dakoku',
+        'url': '',
         'contentType': 'application/x-www-form-urlencoded',
         'data': {
             'stamp_type': dakoku_type,

@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 
 
 urlpatterns = [
-    path('', include('kintai_kun.urls')),
+    path('dakoku/', include('kintai_kun.urls')),
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
+    path('', lambda req: redirect('/dakoku/'))
 ]

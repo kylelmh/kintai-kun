@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-dtee-69bt0ruhqw_06kzev=&-5(5&z3c+e==b*maa0=z_v+u1m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.128.5']
+ALLOWED_HOSTS = ['192.168.100.230']
 
 
 # Application definition
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja-jp'
 
 TIME_ZONE = 'Asia/Tokyo'
 
@@ -133,7 +133,7 @@ SASS_PROCESSOR_ROOT = STATIC_URL
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dakoku'
 LOGIN_URL='/login'
 LOGOUT_REDIRECT_URL = '/login'
 

@@ -2,12 +2,46 @@
   text-align: center;
 }
 
+.vh100{
+  height: 100vh;
+}
+
+.login-box {
+  padding: 25px;
+  border-radius: 5%;
+  background-color: #efefef;
+  width: 450px;
+  margin: auto;
+  top: 30%;
+  position: relative;
+}
+
 .btn.-large {
   min-width: 150px;
   min-height: 100px;
   margin: 25px;
 }
 
-#datetime{
+#datetime {
   font-size: 120px;
+}
+
+.container {
+  min-width: 500px;
+}
+
+.alert {
+  margin: 0;
+  &.alert-error{
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+}
+
+.dropdown-menu {
+  &.-right {
+    left: unset;
+    right: 0;
+  }
 }
