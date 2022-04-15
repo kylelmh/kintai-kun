@@ -17,6 +17,7 @@
           {{user.last_name}}
         </button>
         <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'employee_change_password' %}">パスワード変更</a>
           <a class="dropdown-item" href="/logout">ログアウト</a>
         </div>
       </div>
