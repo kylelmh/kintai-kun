@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
+from django.conf import settings
 
 
 urlpatterns = [
@@ -25,3 +25,9 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('', lambda req: redirect('/dakoku/'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.STATIC_URL,
+        document_root=settings.STATIC_ROOT,
+    )

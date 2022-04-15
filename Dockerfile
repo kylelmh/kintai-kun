@@ -6,7 +6,7 @@ COPY requirements.txt /code/requirements.txt
 COPY . /code/
 WORKDIR /code
 EXPOSE 8000
-RUN RUN pip3 install -r requirements.txt && \
+RUN pip3 install -r requirements.txt && \
     adduser --disabled-password --no-create-home app &&\
     mkdir -p /vol/web/static && \
     mkdir -p /vol/web/media && \

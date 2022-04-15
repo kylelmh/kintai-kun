@@ -7,7 +7,7 @@ services:
     depends_on:
       - web
     ports:
-      - 80:8000
+      - 3000:8000
     volumes:
       - static-data:/vol/static
 
@@ -26,14 +26,14 @@ services:
     volumes:
       - static-data:/vol/web
     environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_NAME=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     depends_on:
       - db
 
 volumes:
-  postgres-data
-  static-data
+  postgres-data:
+  static-data:
