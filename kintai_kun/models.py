@@ -40,7 +40,7 @@ class WorkTimestamp(TimeStampedModel):
   date = models.DateField(default=timezone.now)
   class Meta:
     constraints = [
-      models.UniqueConstraint(fields=['date', 'stamp_type'], name='unique_stamp_date')
+      models.UniqueConstraint(fields=['employee', 'date', 'stamp_type'], name='unique_stamp_date')
     ]
   
   def __str__(self):

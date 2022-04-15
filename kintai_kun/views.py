@@ -11,9 +11,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
-
-
 from kintai_kun.models import WorkTimestamp
+from django.db.models import Q
 
 import json
 # Create your views here.
@@ -50,13 +49,22 @@ class DakokuStaffView(View):
     return super().dispatch(*args, **kwargs)
   
   def get(self, request, *args, **kwargs):
-    timestamps = WorkTimestamp.objects.all().order_by('-created_on')
+    name = request.GET.get('name')
+    timestamps = WorkTimestamp.objects.all()
+    if request.GET.get('name'):
+      timestamps = self.search_work_timestamp_by_name(timestamps, name)
+    timestamps = timestamps.order_by('-created_on')
     paginator = Paginator(timestamps, 40)
     page_number = request.GET.get('page')
     context = {
       'timestamps': paginator.get_page(page_number)
     }
     return render(request, 'staff/main/index.html', context=context)
+
+  def search_work_timestamp_by_name(self, wts, name):
+    wts = wts.filter( Q(employee__user__first_name__icontains=name) |
+                      Q(employee__user__last_name__icontains=name))
+    return wts
 
 def employee_change_password(request):
   if request.method == 'POST':

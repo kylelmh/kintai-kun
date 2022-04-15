@@ -38,3 +38,10 @@
     border-color: #f5c6cb;
   }
 }
+
+.dropdown-menu {
+  &.-right {
+    left: unset;
+    right: 0;
+  }
+}
