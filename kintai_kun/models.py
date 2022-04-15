@@ -34,13 +34,14 @@ class WorkTimestamp(TimeStampedModel):
     WORK_END = 2
     BREAK_START = 3
     BREAK_END = 4
-  stamp_type = models.IntegerField(choices=StampType.choices, unique_for_date='created_on')
+  stamp_type = models.IntegerField(choices=StampType.choices)
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
   memo = models.CharField(default='',max_length=255)
-  
-  def save(self, *args, **kwargs):
-    super().validate_unique()
-    return super().save(*args, **kwargs)
+  date = models.DateField(default=timezone.now)
+  class Meta:
+    constraints = [
+      models.UniqueConstraint(fields=['date', 'stamp_type'], name='unique_stamp_date')
+    ]
   
   def __str__(self):
     return f'{self.employee}: {self.created_on.strftime("%Y-%m-%d %H:%M:%S")}, {self.stamp_string}'
