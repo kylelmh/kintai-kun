@@ -25,12 +25,13 @@
       <td>
         {{ts.created_on}} - {{ ts.stamp_string }}
       </td>
-      <td>
-        <input type="text" value="{{ts.memo}}">
+      <td class="w-20">
+        {{ts.memo}}
+        <!-- <input type="text" value="{{ts.memo}}"> -->
       </td>
       <td class="-centering">
-        <button class="btn btn-info">編集</button>
-        <button class="btn btn-danger">削除</button>
+        <a class="btn btn-info" href="/admin/kintai_kun/worktimestamp/{{ts.id}}/change">編集</a>
+        <a class="btn btn-danger" href="/admin/kintai_kun/worktimestamp/{{ts.id}}/delete">削除</a>
       </td>
     </tr>
     {% endfor %}
