@@ -1,0 +1,39 @@
+version: "3"
+   
+services:
+  proxy:
+    build: .
+    restart: always
+    depends_on:
+      - web
+    ports:
+      - 80:8000
+    volumes:
+      - static-data:/vol/static
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+  web:
+    build: .
+    restart: always
+    volumes:
+      - static-data:/vol/web
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+    depends_on:
+      - db
+
+volumes:
+  postgres-data
+  static-data
