@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponseNotFound, HttpResponse
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
-from kintai_kun.models import WorkTimestamp
+
 from django.views import View
+from django.core.paginator import Paginator
+
+from kintai_kun.models import WorkTimestamp
+
 import json
 # Create your views here.
 
@@ -32,3 +38,17 @@ class DakokuView(View):
     new_stamp.save()
     payload = {'success': True}
     return HttpResponse(json.dumps(payload), content_type='application/json')
+
+class DakokuStaffView(View):
+  @method_decorator(staff_member_required)
+  def dispatch(self, *args, **kwargs):
+    return super().dispatch(*args, **kwargs)
+  
+  def get(self, request, *args, **kwargs):
+    timestamps = WorkTimestamp.objects.all().order_by('-created_on')
+    paginator = Paginator(timestamps, 40)
+    page_number = request.GET.get('page')
+    context = {
+      'timestamps': paginator.get_page(page_number)
+    }
+    return render(request, 'staff/main/index.html', context=context)
