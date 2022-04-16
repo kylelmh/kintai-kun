@@ -4,4 +4,4 @@ django-compressor
 django-sass-processor
 django-crispy-forms
 libsass
-uwsgi
+uWSGI
