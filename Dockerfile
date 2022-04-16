@@ -4,6 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 COPY requirements.txt /code/requirements.txt
 COPY . /code/
+COPY ./scripts /scripts
 WORKDIR /code
 EXPOSE 8000
 RUN pip3 install -r requirements.txt && \
@@ -11,8 +12,10 @@ RUN pip3 install -r requirements.txt && \
     mkdir -p /vol/web/static && \
     mkdir -p /vol/web/media && \
     chown -R app:app /vol && \
-    chown -R 755 /vol
-
+    chown -R 755 /vol && \
+    chmod -R +x /scripts && \
+    
+ENV PATH="/scripts:/py/bin:$PATH"
 USER app
 
 CMD ["run.sh"]
