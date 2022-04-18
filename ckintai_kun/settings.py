@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 0
+DEBUG = 1
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS.extend(
     filter(
@@ -155,12 +155,6 @@ LOGOUT_REDIRECT_URL = '/login'
 CRISPY_TEMPLATE_PACK='bootstrap4'
 
 # SECURE_SSL_REDIRECT=True
-SESSION_COOKIE_SECURE =True
-CSRF_COOKIE_SECURE=True
-CSRF_TRUSTED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS.extend(
-    filter(
-        None,
-        os.environ.get('ALLOWED_HOSTS', '').split(','),
-    )
-)
+# SESSION_COOKIE_SECURE =True
+# CSRF_COOKIE_SECURE=True
+CSRF_TRUSTED_ORIGINS = os.environ.get('TRUSTED_ORIGIN')
