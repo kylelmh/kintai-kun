@@ -1,7 +1,5 @@
 Django>=3.0,<4.0
 psycopg2>=2.8
-django-compressor
-django-sass-processor
+django-sass
 django-crispy-forms
-libsass
-uWSGI
+uwsgi

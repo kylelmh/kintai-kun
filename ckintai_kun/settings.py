@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'sass_processor',
+    'django_sass',
 ]
 
 MIDDLEWARE = [
@@ -137,11 +137,10 @@ MEDIA_ROOT = '/vol/web/media'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'sass_processor.finders.CssFinder',
 ]
-SASS_PROCESSOR_ROOT = STATIC_URL
-COMPRESS_OFFLINE = True
-LIBSASS_OUTPUT_STYLE = 'compressed'
+# SASS_PROCESSOR_ROOT = STATIC_URL
+# COMPRESS_OFFLINE = True
+# LIBSASS_OUTPUT_STYLE = 'compressed'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Default primary key field type
@@ -158,3 +157,10 @@ CRISPY_TEMPLATE_PACK='bootstrap4'
 # SECURE_SSL_REDIRECT=True
 SESSION_COOKIE_SECURE =True
 CSRF_COOKIE_SECURE=True
+CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS.extend(
+    filter(
+        None,
+        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    )
+)
