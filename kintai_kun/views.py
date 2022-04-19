@@ -14,6 +14,8 @@ from django.contrib.auth import update_session_auth_hash
 from kintai_kun.models import WorkTimestamp
 from django.db.models import Q
 
+from .forms import *
+
 import json
 # Create your views here.
 
@@ -23,7 +25,23 @@ class ShiftsView(View):
     return super().dispatch(*args, **kwargs)
 
   def get(self, request, *args, **kwargs):
-    return render(request, 'shift_manager/index.html')
+    shift_form = ShiftForm()
+    context = {
+      'shift_form': shift_form
+    }
+    return render(request, 'shifts/index.html', context=context)
+  
+  def post(self, request, *args, **kwargs):
+    shift_form = ShiftForm(request.POST)
+    if shift_form.is_valid():
+      shift = shift_form.save(commit=False)
+      shift.employee = request.user.employee
+      shift.save()
+      messages.success(request, 'シフトが作成されました。')
+      return redirect('dakoku_shifts')
+    else:
+      messages.error(request, 'シフト作成にエラーが発生しました。')
+      return render()
 
 class DakokuView(View):
   @method_decorator(login_required)

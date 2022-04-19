@@ -4,7 +4,7 @@ from django.utils import timezone
 
 # Create your models here.
 class TimeStampedModel(models.Model):
-  created_on = models.DateTimeField(default=timezone.now)
+  created_on = models.DateTimeField(auto_now=timezone.now)
   updated_at = models.DateTimeField(auto_now=True)
   class Meta:
     abstract = True
@@ -18,15 +18,18 @@ class Employee(TimeStampedModel):
     return f'{self.user.first_name} {self.user.last_name}'
 
   user = models.OneToOneField(User, on_delete=models.CASCADE)
-  employee_id = models.CharField
   contract = models.IntegerField(choices=ContractType.choices)
-  name = models.CharField
-  photo = models.ImageField
 
 class Shift(TimeStampedModel):
+  class StatusType(models.IntegerChoices):
+    PENDING = 1
+    APPROVED = 2
+    REJECTED = 3
+    CHANGE_REQ = 4
+  status = models.IntegerField(default=1, choices=StatusType.choices)
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
-  start_time = models.DateTimeField
-  end_time = models.DateTimeField
+  start_time = models.DateTimeField(default=timezone.now)
+  end_time = models.DateTimeField(default=timezone.now)
 
 class WorkTimestamp(TimeStampedModel):
   class StampType(models.IntegerChoices):
