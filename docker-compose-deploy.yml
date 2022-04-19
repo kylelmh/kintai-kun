@@ -33,6 +33,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - TRUSTED_ORIGIN=${TRUSTED_ORIGIN}
+      - DEBUG=0
     depends_on:
       - db
 

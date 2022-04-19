@@ -7,9 +7,9 @@ services:
       - ./data/db:/var/lib/postgresql/data
       - ./data/web:/vol/web
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
@@ -18,9 +18,13 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - SECRET_KEY=CHANGEME
+      - POSTGRES_HOST=db
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SECRET_KEY=changeme
+      - ALLOWED_HOSTS=localhost
+      - TRUSTED_ORIGIN=http://localhost
+      - DEBUG=1
     depends_on:
       - db
