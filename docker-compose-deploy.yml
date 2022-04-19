@@ -1,0 +1,41 @@
+version: "3"
+   
+services:
+  proxy:
+    build: ./proxy
+    restart: always
+    depends_on:
+      - web
+    ports:
+      - 3000:8000
+    volumes:
+      - static-data:/vol/static
+
+  db:
+    image: postgres:14-alpine
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  web:
+    build: .
+    restart: always
+    volumes:
+      - static-data:/vol/web
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - TRUSTED_ORIGIN=${TRUSTED_ORIGIN}
+    depends_on:
+      - db
+
+volumes:
+  postgres-data:
+  static-data:
