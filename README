@@ -11,12 +11,14 @@ docker
 docker-compose
 
 To start the development server, create a `.env` file following `.env.sample` and use
+
 ```
 docker-compose build
 docker-compose up
 ```
 
 To deploy the server,
+
 ```
 docker-compose -f docker-compose-deploy.yml build
 docker-compose -f docker-compose-deploy.yml up -d
