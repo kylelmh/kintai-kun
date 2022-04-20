@@ -39,8 +39,6 @@ class ShiftsView(View):
     shift_form = ShiftForm(request.POST)
     if shift_form.is_valid():
       shift = shift_form.save(commit=False)
-      # shift.start_time = datetime(*shift.date, *shift.start_time)
-      # shift.end_time = datetime(*shift.date, *shift.end_time)
       shift.employee = request.user.employee
       shift.status = 1
       shift.save()

@@ -1,3 +1,4 @@
+from tracemalloc import start
 from django import forms
 from .models import Shift
 from django.utils import timezone
@@ -11,8 +12,8 @@ class ShiftForm(forms.ModelForm):
     fields = ['date', 'start_time', 'end_time', 'memo']
     widgets = {
       'date': forms.DateInput(attrs={'type': 'date'}),
-      'start_time': forms.TimeInput(attrs={'type': 'time'}),
-      'end_time': forms.TimeInput(attrs={'type': 'time'}),
+      'start_time': forms.TimeInput(attrs={'type': 'time', 'min': '10:00'}),
+      'end_time': forms.TimeInput(attrs={'type': 'time', 'max': '18:30'}),
     }
   
   def clean(self):
@@ -23,6 +24,13 @@ class ShiftForm(forms.ModelForm):
       raise ValidationError(
         "終業時間は始業時間より早い。"
       )
+    
+    if self.save(commit=False).shift_time < 4.0:
+      raise ValidationError(
+        "最低シフトは４時間"
+      )
+      
+
 
 
 

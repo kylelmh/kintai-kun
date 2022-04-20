@@ -30,9 +30,9 @@ class Shift(TimeStampedModel):
   status = models.IntegerField(default=1, choices=StatusType.choices)
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
   date = models.DateField(default=timezone.now)
-  start_time = models.TimeField(default=(0,0,0))
-  end_time = models.TimeField(default=(0,0,0))
-  memo = models.CharField(default='', max_length=255)
+  start_time = models.TimeField(default=timedelta(0,0,0,0,0,10))
+  end_time = models.TimeField(default=timedelta(0,0,0,0,30,18))
+  memo = models.CharField(default='', max_length=255, blank=True)
   class Meta:
     constraints = [
       models.CheckConstraint(check=models.Q(end_time__gt=models.F('start_time')), name='end_gt_start'),
