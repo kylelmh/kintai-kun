@@ -1,3 +1,4 @@
+# Kintai-kun
 Kintai-kun is a lightweight digital timecard web app written in Django.
 The production uses an nginx reverse proxy for processing static files.
 
@@ -23,3 +24,14 @@ To deploy the server,
 docker-compose -f docker-compose-deploy.yml build
 docker-compose -f docker-compose-deploy.yml up -d
 ```
+
+# 勤怠管理ウェブサーバー　きんたいくん
+Django をベースにした勤怠管理ウェブサーバーです。
+
+# 立ち上げ
+`.env.sample` ファイルを参考にし、ローカルで`.env`を作成してから
+```
+docker-compose build
+docker-compose up
+```
+実行してください。
