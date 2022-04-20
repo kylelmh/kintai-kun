@@ -1,0 +1,46 @@
+<div>
+  <table class="table">
+    <tr>
+      <th>最終更新</th>
+      <th>出勤日</th>
+      <th>始業時間</th>
+      <th>終業時間</th>
+      <th>稼働時間</th>
+      <th>メモ</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for shift in shifts %}
+    <tr>
+      <td>
+        {{ shift.updated_at }}
+      </td>
+      <td>
+        {{ shift.date }}
+      </td>
+      <td>
+        {{ shift.start_time }}
+      </td>
+      <td>
+        {{ shift.end_time}}
+      </td>
+      <td>
+        {{ shift.shift_time}}
+      </td>
+      <td>
+        {{ shift.memo }}
+      </td>
+      <td>
+        {{ shift.status_string }}
+      </td>
+      <td>
+        {% if shift.status == 1 %}
+        <a class="btn btn-info" href="{% url 'dakoku_shift_edit' shift.pk %}">変更</a>
+        {% else %}
+        <a class="btn btn-info disabled" href="#">変更</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>

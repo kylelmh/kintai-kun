@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import timedelta
 
 # Create your models here.
 class TimeStampedModel(models.Model):
-  created_on = models.DateTimeField(auto_now=timezone.now)
+  created_on = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   class Meta:
     abstract = True
@@ -28,8 +29,28 @@ class Shift(TimeStampedModel):
     CHANGE_REQ = 4
   status = models.IntegerField(default=1, choices=StatusType.choices)
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
-  start_time = models.DateTimeField(default=timezone.now)
-  end_time = models.DateTimeField(default=timezone.now)
+  date = models.DateField(default=timezone.now)
+  start_time = models.TimeField(default=(0,0,0))
+  end_time = models.TimeField(default=(0,0,0))
+  memo = models.CharField(default='', max_length=255)
+  class Meta:
+    constraints = [
+      models.CheckConstraint(check=models.Q(end_time__gt=models.F('start_time')), name='end_gt_start'),
+    ]
+
+  @property
+  def status_string(self):
+    statuses = ['申込み中', '確定', 'キャンセル', '要変更']
+    return statuses[self.status-1]
+  
+  @property
+  def shift_time(self):
+    h2 = self.end_time.hour
+    m2 = self.end_time.minute
+    h1 = self.start_time.hour
+    m1 = self.start_time.minute
+    dt = timedelta(hours=h2, minutes=m2) - timedelta(hours=h1, minutes=m1)
+    return dt.total_seconds()/3600
 
 class WorkTimestamp(TimeStampedModel):
   class StampType(models.IntegerChoices):

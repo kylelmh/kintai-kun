@@ -11,24 +11,7 @@
         <button type="submit" class="btn btn-success">作成する</button>
       </form>
   </div>
-  <div>
-    <table class="table">
-      <tr>
-        <th>シフト履歴</th>
-        <th></th>
-      </tr>
-      {% for shift in shifts%}
-      <tr>
-        <td>
-          {{shift.created_on}}
-        </td>
-        <td>
-          {{ shift.status_string }}
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
+  {% include 'shifts/shift_table.html' with edit=True %}
 </div>
 
 {% endblock %}

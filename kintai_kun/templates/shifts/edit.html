@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'header.html' %}
+<div class="-centering">
+  <div>
+      <form method="post" class="form-group datetime-input">
+        {% csrf_token %}
+        {{shift_form | crispy}}
+        <a class="  btn btn-danger" href="/dakoku/shifts">戻る</a>
+        <button type="submit" method='patch' class="btn btn-success">更新する</button>
+      </form>
+  </div>
+  <table class="table">
+    <tr>
+      <td>
+        {{ the_shift.date }}
+      </td>
+      <td>
+        {{ the_shift.start_time }}
+      </td>
+      <td>
+        {{ the_shift.end_time }}
+      </td>
+      <td>
+        {{ the_shift.shift_time }}
+      </td>
+    </tr>
+  </table>
+  {% include 'shifts/shift_table.html' %}
+</div>
+
+{% endblock %}
