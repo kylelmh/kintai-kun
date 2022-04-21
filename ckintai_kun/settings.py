@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'django_sass',
 ]
 
 MIDDLEWARE = [
@@ -138,9 +137,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-# SASS_PROCESSOR_ROOT = STATIC_URL
 # COMPRESS_OFFLINE = True
-# LIBSASS_OUTPUT_STYLE = 'compressed'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Default primary key field type
