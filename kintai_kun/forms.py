@@ -24,12 +24,6 @@ class ShiftForm(forms.ModelForm):
       raise ValidationError(
         "終業時間は始業時間より早い。"
       )
-    
-    if self.save(commit=False).shift_time < 4.0:
-      raise ValidationError(
-        "最低シフトは４時間"
-      )
-      
 
 
 

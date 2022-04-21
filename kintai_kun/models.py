@@ -35,7 +35,7 @@ class Shift(TimeStampedModel):
   memo = models.CharField(default='', max_length=255, blank=True)
   class Meta:
     constraints = [
-      models.CheckConstraint(check=models.Q(end_time__gt=models.F('start_time')), name='end_gt_start'),
+      models.CheckConstraint(check=models.Q(end_time__gte=models.F('start_time')+timedelta(hours=4)), name='end_gt_start'),
     ]
 
   @property
