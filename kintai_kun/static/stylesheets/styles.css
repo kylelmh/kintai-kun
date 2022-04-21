@@ -26,6 +26,12 @@
   font-size: 120px;
 }
 
+.datetime-input{
+  width: 400px;
+  padding: 25px;
+  margin: 0px 25px;
+}
+
 .container {
   min-width: 500px;
 }
@@ -43,4 +49,9 @@
 .dropdown-menu.-right {
   left: unset;
   right: 0;
+}
+
+a.disabled {
+  color: gray;
+  pointer-events: none;
 }

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'header.html' %}
+<div class="-centering">
+  <div>
+      <form method="post" class="form-group datetime-input">
+        {% csrf_token %}
+        {{shift_form | crispy}}
+        <button type="submit" class="btn btn-success">作成する</button>
+      </form>
+  </div>
+  {% include 'shifts/shift_table.html' %}
+</div>
+{% endblock %}
+{% block scripts %}
+{% load static %}
+  <script src="{% static 'scripts/shifts.js' %}"></script>
+{% endblock %}

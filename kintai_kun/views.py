@@ -14,6 +14,9 @@ from django.contrib.auth import update_session_auth_hash
 from kintai_kun.models import WorkTimestamp
 from django.db.models import Q
 
+from .forms import *
+from datetime import datetime
+
 import json
 # Create your views here.
 
@@ -23,7 +26,65 @@ class ShiftsView(View):
     return super().dispatch(*args, **kwargs)
 
   def get(self, request, *args, **kwargs):
-    return render(request, 'shift_manager/index.html')
+    shift_form = ShiftForm()
+    shifts = Shift.objects.filter(employee = request.user.employee).order_by('-updated_at')
+    page_number = request.GET.get('page')
+    context = {
+      'shift_form': shift_form,
+      'shifts' : Paginator(shifts, 10).get_page(page_number)
+    }
+    return render(request, 'shifts/index.html', context=context)
+  
+  def post(self, request, *args, **kwargs):
+    shift_form = ShiftForm(request.POST)
+    if shift_form.is_valid():
+      shift = shift_form.save(commit=False)
+      shift.employee = request.user.employee
+      shift.status = 1
+      shift.save()
+      messages.success(request, 'シフトが作成されました。')
+      return redirect('dakoku_shifts')
+    else:
+      messages.error(request, 'シフト作成にエラーが発生しました。')
+      return self.get(request)
+
+class ShiftEditView(View):
+  @method_decorator(login_required)
+  def dispatch(self, *args, **kwargs):
+    return super().dispatch(*args, **kwargs)
+  
+  def get(self, request, pk ,*args, **kwargs):
+    shift = Shift.objects.get(pk=pk)
+    if not self.is_shift_editable(request, shift):
+      return HttpResponseNotFound()
+    shift_form = ShiftForm(instance=shift)
+    context = {
+      'shift_form': shift_form,
+      'shifts': [shift],
+    }
+    return render(request, 'shifts/edit.html', context=context)
+  
+  def post(self, request, pk, *args, **kwargs):
+    shift = Shift.objects.get(pk=pk)
+    shift_form = ShiftForm(request.POST, instance=shift)
+    if shift_form.is_valid() and self.is_shift_editable(request, shift):
+      shift = shift_form.save(commit=False)
+      shift.status = 1
+      shift.save()
+      messages.success(request, 'シフトが更新されました。')
+      return redirect('dakoku_shifts')
+    else:
+      messages.error(request, 'シフト更新にエラーが発生しました。')
+      return self.get(request)
+  
+  def is_shift_editable(self, request, shift):
+    if shift.employee != request.user.employee:
+      return False
+
+    if shift.status != 1:
+      return False
+
+    return True
 
 class DakokuView(View):
   @method_decorator(login_required)
