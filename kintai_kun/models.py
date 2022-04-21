@@ -50,7 +50,10 @@ class Shift(TimeStampedModel):
     h1 = self.start_time.hour
     m1 = self.start_time.minute
     dt = timedelta(hours=h2, minutes=m2) - timedelta(hours=h1, minutes=m1)
-    return dt.total_seconds()/3600
+    dt = dt.total_seconds()
+    if dt > 3600*6:
+      dt -= 3600
+    return dt/3600
 
 class WorkTimestamp(TimeStampedModel):
   class StampType(models.IntegerChoices):
