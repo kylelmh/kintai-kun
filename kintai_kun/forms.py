@@ -13,7 +13,7 @@ class ShiftForm(forms.ModelForm):
     widgets = {
       'date': forms.DateInput(attrs={'type': 'date'}),
       'start_time': forms.TimeInput(attrs={'type': 'time', 'min': '10:00'}),
-      'end_time': forms.TimeInput(attrs={'type': 'time', 'max': '18:30'}),
+      'end_time': forms.TimeInput(attrs={'type': 'time', 'max': '18:30', 'min': '14:00'}),
     }
   
   def clean(self):
