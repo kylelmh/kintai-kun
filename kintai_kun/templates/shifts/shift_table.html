@@ -43,13 +43,5 @@
     </tr>
     {% endfor %}
   </table>
-  <div>
-    <ul class="pagination">
-      {% for page_number in shifts.paginator.page_range %}
-      <li class="page-item {% if page_number == shifts.number %}active{% endif %}">
-        <a class="page-link" href="?page={{page_number}}">{{page_number}}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+  {% include 'paginator.html' with page_object=shifts%}
 </div>
