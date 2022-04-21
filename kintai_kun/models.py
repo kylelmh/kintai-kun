@@ -37,6 +37,8 @@ class Shift(TimeStampedModel):
     constraints = [
       models.CheckConstraint(check=models.Q(end_time__gte=models.F('start_time')+timedelta(hours=4)), name='end_gt_start'),
     ]
+  def __str__(self):
+    return f'{self.date}, {self.employee.user.last_name}'
 
   @property
   def status_string(self):
