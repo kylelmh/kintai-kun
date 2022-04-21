@@ -55,7 +55,7 @@ class ShiftEditView(View):
   
   def get(self, request, pk ,*args, **kwargs):
     shift = Shift.objects.get(pk=pk)
-    if shift.employee != request.user.employee:
+    if not self.is_shift_editable(request, shift):
       return HttpResponseNotFound()
     shift_form = ShiftForm(instance=shift)
     context = {
@@ -67,7 +67,7 @@ class ShiftEditView(View):
   def post(self, request, pk, *args, **kwargs):
     shift = Shift.objects.get(pk=pk)
     shift_form = ShiftForm(request.POST, instance=shift)
-    if shift_form.is_valid() and shift.status == 1 and shift.employee == request.user.employee:
+    if shift_form.is_valid() and self.is_shift_editable(request, shift):
       shift = shift_form.save(commit=False)
       shift.status = 1
       shift.save()
@@ -76,6 +76,15 @@ class ShiftEditView(View):
     else:
       messages.error(request, 'シフト更新にエラーが発生しました。')
       return self.get(request)
+  
+  def is_shift_editable(self, request, shift):
+    if shift.employee != request.user.employee:
+      return False
+
+    if shift.status != 1:
+      return False
+
+    return True
 
 class DakokuView(View):
   @method_decorator(login_required)
