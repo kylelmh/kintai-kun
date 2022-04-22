@@ -11,7 +11,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
-from kintai_kun.models import WorkTimestamp
+from kintai_kun.models import *
 from django.db.models import Q
 
 from .forms import *
@@ -85,6 +85,30 @@ class ShiftEditView(View):
       return False
 
     return True
+
+class StaffShiftsView(View):
+  @method_decorator(staff_member_required)
+  def dispatch(self, *args, **kwargs):
+    return super().dispatch(*args, **kwargs)
+
+  def get(self, request, *args, **kwargs):
+    name = request.GET.get('name')
+    shifts = Shift.objects.all().order_by('-updated_at')
+    if name:
+      shifts = self.search_shift_by_name(shifts, name)
+    page_number = request.GET.get('page')
+    context = {
+      'shifts' : Paginator(shifts, 50).get_page(page_number)
+    }
+    return render(request, 'staff/shifts/index.html', context=context)
+
+  def post(self, request, *args, **kwargs):
+    return HttpResponse(request.body)
+  
+  def search_shift_by_name(self, shifts, name):
+    shifts = shifts.filter( Q(employee__user__first_name__icontains=name) |
+                      Q(employee__user__last_name__icontains=name))
+    return shifts
 
 class DakokuView(View):
   @method_decorator(login_required)
