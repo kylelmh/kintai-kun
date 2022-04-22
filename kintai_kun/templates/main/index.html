@@ -16,12 +16,16 @@
   <table class="table">
     <tr>
       <th>打刻履歴</th>
+      <th>メモ</th>
       <th></th>
     </tr>
     {% for ts in timestamps%}
     <tr>
       <td>
         {{ts.created_on}}
+      </td>
+      <td>
+        {{ ts.memo }}
       </td>
       <td>
         {{ ts.stamp_string }}
