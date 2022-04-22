@@ -25,7 +25,7 @@
         {{ shift.end_time}}
       </td>
       <td>
-        {{ shift.shift_time}}
+        {{ shift.shift_time | stringformat:".1f"}}
       </td>
       <td>
         {{ shift.memo }}
