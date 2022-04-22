@@ -10,6 +10,8 @@ function check_all(e){
 }
 
 function confirm_form(e){
+  console.log(e.originalEvent.submitter.value)
+  $('input:hidden[name="method"]').prop('value' , e.originalEvent.submitter.value)
   shifts_count = $('input:checkbox:checked[name="shifts[]"]').length
   e.preventDefault()
   if (shifts_count < 1){

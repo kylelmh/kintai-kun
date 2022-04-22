@@ -109,8 +109,18 @@ class StaffShiftsView(View):
     return render(request, 'staff/shifts/index.html', context=context)
 
   def post(self, request, *args, **kwargs):
-    return HttpResponse(request.body)
-  
+    method = request.POST.get('method')
+    status = request.POST.get('status')
+    shift_pks = request.POST.getlist('shifts[]')
+    shifts = Shift.objects.filter(pk__in = shift_pks)
+    if method == 'patch':
+      shifts.update(status=status)
+    elif method == 'delete':
+      shifts.delete()
+    else:
+      return HttpResponseNotFound()
+    return redirect('staff_shifts')
+    
   def search_shift_by_name(self, shifts, name):
     shifts = shifts.filter( Q(employee__user__first_name__icontains=name) |
                       Q(employee__user__last_name__icontains=name))
