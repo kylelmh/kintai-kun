@@ -22,8 +22,11 @@ import json
 
 class ShiftsView(View):
   @method_decorator(login_required)
-  def dispatch(self, *args, **kwargs):
-    return super().dispatch(*args, **kwargs)
+  def dispatch(self, request, *args, **kwargs):
+    if request.user.employee.contract != 1:
+      return HttpResponseNotFound()
+
+    return super().dispatch(request, *args, **kwargs)
 
   def get(self, request, *args, **kwargs):
     shift_form = ShiftForm()
@@ -50,8 +53,11 @@ class ShiftsView(View):
 
 class ShiftEditView(View):
   @method_decorator(login_required)
-  def dispatch(self, *args, **kwargs):
-    return super().dispatch(*args, **kwargs)
+  def dispatch(self, request, *args, **kwargs):
+    if request.user.employee.contract != 1:
+      return HttpResponseNotFound()
+
+    return super().dispatch(request, *args, **kwargs)
   
   def get(self, request, pk ,*args, **kwargs):
     shift = Shift.objects.get(pk=pk)
