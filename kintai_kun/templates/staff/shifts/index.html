@@ -3,6 +3,10 @@
 
 {% block content %}
 {% include 'staff/header.html' %}
+<form class="search-box" action="" method="get">
+  <input type="text" name="name" placeholder="名前">
+  <button class='btn btn-primary' type="submit">検索</button>
+</form>
 <div class="-centering">
   <div>
     <form method="post" action="#" value="">
