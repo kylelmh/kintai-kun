@@ -2,7 +2,6 @@
 
 set -e
 
-python manage.py sass kintai_kun/static/stylesheets static -t compressed
 python manage.py collectstatic --noinput
 python manage.py migrate
 
