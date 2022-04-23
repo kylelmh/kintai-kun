@@ -6,16 +6,25 @@ from kintai_kun.models import Shift
 from kintai_kun.forms import StaffShiftForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q
+from django.utils import timezone
 
 class StaffShiftsView(StaffView):
   def get(self, request, *args, **kwargs):
     name = request.GET.get('name')
-    shifts = Shift.objects.all().order_by('-updated_at')
+    month = request.GET.get('month')
+    if not month:
+      month = timezone.now().month
+    shifts = Shift.objects.filter(
+      date__year = timezone.now().year,
+      date__month = month
+      ).order_by('-date')
     if name:
       shifts = self.search_shift_by_name(shifts, name)
     page_number = request.GET.get('page')
     context = {
-      'shifts' : Paginator(shifts, 50).get_page(page_number)
+      'shifts' : Paginator(shifts, 50).get_page(page_number),
+      'month': month
     }
     return render(request, 'staff/shifts/index.html', context=context)
 
@@ -31,6 +40,11 @@ class StaffShiftsView(StaffView):
     else:
       return HttpResponseNotAllowed()
     return redirect('staff_shifts')
+  
+  def search_shift_by_name(self, shifts, name):
+    shifts = shifts.filter( Q(employee__user__first_name__icontains=name) |
+                  Q(employee__user__last_name__icontains=name))
+    return shifts
 
 class StaffShiftEditView(StaffView):  
   def get(self, request, pk ,*args, **kwargs):
