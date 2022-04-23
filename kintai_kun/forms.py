@@ -25,6 +25,8 @@ class ShiftForm(forms.ModelForm):
         "終業時間は始業時間より早い。"
       )
 
-
+class StaffShiftForm(ShiftForm):
+  class Meta(ShiftForm.Meta):
+    fields = ['date', 'start_time', 'end_time', 'memo', 'status']
 
 

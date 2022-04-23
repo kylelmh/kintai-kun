@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'staff/header.html' %}
+<form class="search-box" action="" method="get">
+  <input type="text" name="name" placeholder="名前">
+  <button class='btn btn-primary' type="submit">検索</button>
+</form>
+<div class="-centering">
+  <div>
+    <form method="post" id="shifts_form">
+    {% csrf_token %}
+    <table class="table">
+      <tr>
+        <th>
+          <div class="form-check">
+            <input class="form-check-input" data-group="shifts" type="checkbox" id="main_cb">
+          </div>
+        </th>
+        <th>最終更新</th>
+        <th>従業員名</th> 
+        <th>出勤日</th>
+        <th>始業時間</th>
+        <th>終業時間</th>
+        <th>稼働時間</th>
+        <th>メモ</th>
+        <th>
+          <span class="mr-3">一括編集</span>
+          <select name="status">
+            <option value="1">申込み中</option>
+            <option value="2">確定</option>
+            <option value="3">キャンセル</option>
+            <option value="4">要変更</option>
+          </select>
+        </th>
+        <th>
+          <button type="submit" name="method" value="patch" class="btn btn-info" href="#">変更</button>
+          <button type="submit" name="method" value="delete" class="btn btn-danger" href="#">削除</button>
+          <input type="hidden" name="method" value="patch">
+        </th>
+      </tr>
+      {% for shift in shifts %}
+      <tr>
+        <td>
+          <div class="form-check">
+            <input class="form-check-input" data-group="shifts" type="checkbox" name="shifts[]" value="{{ shift.pk }}">
+          </div>
+        </td>
+        <td>
+          {{ shift.updated_at }}
+        </td>
+        <td>
+          {{ shift.employee.user.first_name }} {{shift.employee.user.last_name}}
+        </td>
+        <td>
+          {{ shift.date }}
+        </td>
+        <td>
+          {{ shift.start_time }}
+        </td>
+        <td>
+          {{ shift.end_time}}
+        </td>
+        <td>
+          {{ shift.shift_time | stringformat:".1f"}}
+        </td>
+        <td>
+          {{ shift.memo }}
+        </td>
+        <td>
+          {{ shift.status_string }}
+        </td>
+        <td>
+          <a class="btn btn-info" href="{% url 'staff_shift_edit' shift.pk %}">変更</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    </form>
+    {% include 'paginator.html' with page_object=shifts%}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load static %}
+<script src="{% static 'scripts/staff/shifts.js' %}"></script>
+{% endblock %}
