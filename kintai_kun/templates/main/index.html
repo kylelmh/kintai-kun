@@ -15,7 +15,12 @@
 <div>
   <table class="table">
     <tr>
-      <th>打刻履歴</th>
+      <th>
+        <form method="get">
+          打刻履歴
+          (<input type="number" min="1" max="12" name="month" value="{{month}}">月)
+        </form>
+      </th>
       <th>メモ</th>
       <th></th>
     </tr>
