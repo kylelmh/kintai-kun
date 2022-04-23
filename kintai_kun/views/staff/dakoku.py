@@ -3,6 +3,7 @@ from kintai_kun.views.custom_views import StaffView
 from kintai_kun.models import WorkTimestamp
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 class StaffDakokuView(StaffView):
   def dispatch(self, *args, **kwargs):
@@ -10,14 +11,21 @@ class StaffDakokuView(StaffView):
   
   def get(self, request, *args, **kwargs):
     name = request.GET.get('name')
-    timestamps = WorkTimestamp.objects.all()
+    month = request.GET.get('month')
+    if not month:
+      month = timezone.now().month
+    timestamps = WorkTimestamp.objects.filter(
+      created_on__year = timezone.now().year,
+      created_on__month = month
+    ).order_by('-created_on')
     if request.GET.get('name'):
       timestamps = self.search_work_timestamp_by_name(timestamps, name)
     timestamps = timestamps.order_by('-created_on')
     paginator = Paginator(timestamps, 40)
     page_number = request.GET.get('page')
     context = {
-      'timestamps': paginator.get_page(page_number)
+      'timestamps': paginator.get_page(page_number),
+      'month': month
     }
     return render(request, 'staff/main/index.html', context=context)
 
