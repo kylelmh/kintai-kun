@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'header.html' %}
+<div class="-centering">
+  <div>
+      <form method="post" class="form-group datetime-input">
+        <label>{{ shift.employee.user.first_name }} {{shift.employee.user.last_name}}</label>
+        {% csrf_token %}
+        {{shift_form | crispy}}
+        <a class="  btn btn-danger" href="{% url 'staff_shifts' %}">戻る</a>
+        <button type="submit" method='patch' class="btn btn-success">更新する</button>
+      </form>
+  </div>
+</div>
+
+{% endblock %}

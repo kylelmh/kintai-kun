@@ -72,8 +72,7 @@
           {{ shift.status_string }}
         </td>
         <td>
-          <a class="btn btn-info" href="{% url 'dakoku_shift_edit' shift.pk %}">変更</a>
-          <a class="btn btn-danger" href="#">削除</a>
+          <a class="btn btn-info" href="{% url 'staff_shift_edit' shift.pk %}">変更</a>
         </td>
       </tr>
       {% endfor %}

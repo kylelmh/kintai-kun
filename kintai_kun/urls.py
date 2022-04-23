@@ -8,5 +8,6 @@ urlpatterns = [
     path('shifts/<int:pk>/edit', views.ShiftEditView.as_view(), name='dakoku_shift_edit'),
     path('staff', views.DakokuStaffView.as_view(), name='dakoku_staff'),
     path('staff/shifts', views.StaffShiftsView.as_view(), name='staff_shifts'),
+    path('staff/shifts/<int:pk>/edit', views.StaffShiftEditView.as_view(), name='staff_shift_edit'),
     path('employee_change_password', views.employee_change_password, name='employee_change_password'),
 ]

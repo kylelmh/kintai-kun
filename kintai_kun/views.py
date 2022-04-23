@@ -120,11 +120,32 @@ class StaffShiftsView(View):
     else:
       return HttpResponseNotFound()
     return redirect('staff_shifts')
-    
-  def search_shift_by_name(self, shifts, name):
-    shifts = shifts.filter( Q(employee__user__first_name__icontains=name) |
-                      Q(employee__user__last_name__icontains=name))
-    return shifts
+
+class StaffShiftEditView(View):
+  @method_decorator(staff_member_required)
+  def dispatch(self, *args, **kwargs):
+    return super().dispatch(*args, **kwargs)
+  
+  def get(self, request, pk ,*args, **kwargs):
+    shift = Shift.objects.get(pk=pk)
+    shift_form = StaffShiftForm(instance=shift)
+    context = {
+      'shift_form': shift_form,
+      'shift': shift,
+    }
+    return render(request, 'staff/shifts/edit.html', context=context)
+  
+  def post(self, request, pk, *args, **kwargs):
+    shift = Shift.objects.get(pk=pk)
+    shift_form = StaffShiftForm(request.POST, instance=shift)
+    if shift_form.is_valid():
+      shift = shift_form.save(commit=False)
+      shift.save()
+      messages.success(request, 'シフトが更新されました。')
+      return redirect('staff_shifts')
+    else:
+      messages.error(request, 'シフト更新にエラーが発生しました。')
+      return self.get(request)
 
 class DakokuView(View):
   @method_decorator(login_required)
