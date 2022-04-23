@@ -22,14 +22,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('dakoku/', include('kintai_kun.urls')),
+    path('', include('kintai_kun.urls')),
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    path('', lambda req: redirect('/dakoku/'))
 ]
-
-# if settings.DEBUG:
-#     urlpatterns += static(
-#         settings.STATIC_URL,
-#         document_root=settings.STATIC_ROOT,
-#     )

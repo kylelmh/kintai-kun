@@ -32,7 +32,7 @@ class ShiftsView(UserView):
       shift.status = 1
       shift.save()
       messages.success(request, 'シフトが作成されました。')
-      return redirect('dakoku_shifts')
+      return redirect('shifts')
     else:
       messages.error(request, 'シフト作成にエラーが発生しました。')
       return self.get(request)
@@ -63,7 +63,7 @@ class ShiftEditView(UserView):
       shift.status = 1
       shift.save()
       messages.success(request, 'シフトが更新されました。')
-      return redirect('dakoku_shifts')
+      return redirect('shifts')
     else:
       messages.error(request, 'シフト更新にエラーが発生しました。')
       return self.get(request)

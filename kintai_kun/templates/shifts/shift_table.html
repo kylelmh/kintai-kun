@@ -35,7 +35,7 @@
       </td>
       <td>
         {% if shift.status == 1 %}
-        <a class="btn btn-info" href="{% url 'dakoku_shift_edit' shift.pk %}">変更</a>
+        <a class="btn btn-info" href="{% url 'shift_edit' shift.pk %}">変更</a>
         {% else %}
         <a class="btn btn-info disabled" href="#">変更</a>
         {% endif %}
