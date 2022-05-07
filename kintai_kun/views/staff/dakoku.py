@@ -4,6 +4,8 @@ from kintai_kun.models import WorkTimestamp
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.utils import timezone
+from django.http import HttpResponse
+import csv
 
 class StaffDakokuView(StaffView):
   def dispatch(self, *args, **kwargs):
@@ -33,3 +35,21 @@ class StaffDakokuView(StaffView):
     wts = wts.filter( Q(employee__user__first_name__icontains=name) |
                       Q(employee__user__last_name__icontains=name))
     return wts
+
+class StaffCSVView(StaffView):
+  def get(self, request):
+    month = request.GET.get('month')
+    if not month:
+      month = timezone.now().month
+    response = HttpResponse(
+      content_type="text/csv",
+      headers={'Content-Disposition': f'attachment; filename="{month}.csv"'},
+    )
+    timestamps = WorkTimestamp.objects.filter(
+      created_on__year = timezone.now().year,
+      created_on__month = month
+    ).order_by('employee', 'created_on')
+    writer = csv.writer(response)
+    for ts in timestamps:
+      writer.writerow([ts.employee, ts.date, ts.local_time, ts.stamp_string])
+    return(response)

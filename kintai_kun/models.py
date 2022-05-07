@@ -66,7 +66,7 @@ class WorkTimestamp(TimeStampedModel):
   stamp_type = models.IntegerField(choices=StampType.choices)
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
   memo = models.CharField(default='',max_length=255)
-  date = models.DateField(default=timezone.now)
+  date = models.DateField(default=timezone.now, editable=False)
   class Meta:
     constraints = [
       models.UniqueConstraint(fields=['employee', 'date', 'stamp_type'], name='unique_stamp_date')
@@ -79,4 +79,7 @@ class WorkTimestamp(TimeStampedModel):
   def stamp_string(self):
     stamps = ['出勤', '退勤', '休憩', '休憩終']
     return stamps[self.stamp_type-1]
-    
+  
+  @property
+  def local_time(self):
+    return timezone.localtime(self.created_on).time()
