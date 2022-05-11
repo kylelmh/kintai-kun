@@ -2,12 +2,15 @@ from kintai_kun.views.custom_views import UserView
 from django.http import HttpResponse
 from kintai_kun.models import WorkTimestamp
 from django.shortcuts import render
+from django.core.paginator import Paginator
+
 from django.utils import timezone
 import json
 
 class DakokuView(UserView):
   def get(self, request, *args, **kwargs):
     month = request.GET.get('month')
+    page_number = request.GET.get('page')
     if not month:
       month = timezone.now().month
     timestamps = WorkTimestamp.objects.filter(
@@ -16,7 +19,7 @@ class DakokuView(UserView):
       created_on__month = month
     ).order_by('-created_on')
     context = { 
-      'timestamps': timestamps,
+      'timestamps': Paginator(timestamps, 1).get_page(page_number),
       'month': month,
     }
     return render(request, 'main/index.html', context=context)
