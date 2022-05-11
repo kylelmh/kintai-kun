@@ -1,4 +1,3 @@
-{% if page_object.pages > 1 %}
 <div>
   <ul class="pagination">
     {% for page_number in page_object.paginator.page_range %}
@@ -8,4 +7,3 @@
     {% endfor %}
   </ul>
 </div>
-{% endif %}

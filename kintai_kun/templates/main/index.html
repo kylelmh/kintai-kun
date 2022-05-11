@@ -38,6 +38,10 @@
     </tr>
     {% endfor %}
   </table>
+  {% include 'paginator.html' with page_object=timestamps%}
+</div>
+<div>
+
 </div>
 {% endblock %}
 {% block scripts %}
