@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'header.html' %}
+<form class="search-box" action="" method="get">
+  <input type="text" name="name" placeholder="名前">
+  <button class='btn btn-primary' type="submit">検索</button>
+  (<input type="number" min="1" max="12" name="month" value="{{month}}">月分)
+</form>
+<div class="-centering">
+
+</div>
+{% endblock %}
+{% block scripts %}
+{% load static %}
+<script src="{% static 'scripts/staff/shifts.js' %}"></script>
+{% endblock %}
