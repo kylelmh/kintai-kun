@@ -21,6 +21,10 @@ class Employee(TimeStampedModel):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   contract = models.IntegerField(choices=ContractType.choices)
 
+  def contract_string(self):
+    contracts = ['パート', '業務委託', '正社員']
+    return contracts[self.contract - 1]
+
 class Shift(TimeStampedModel):
   class StatusType(models.IntegerChoices):
     PENDING = 1
