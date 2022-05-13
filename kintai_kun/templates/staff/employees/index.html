@@ -9,9 +9,33 @@
     <button class='btn btn-primary' type="submit">検索</button>
   </form>
 </div>
-
 <div class="-centering">
-
+  <table class="table">
+    <tr>
+      <th>従業員名</th>
+      <th></th>
+      <th>最終ログイン</th>
+      <th></th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+      <td>
+        {{employee.user.last_name}} {{employee.user.first_name}}
+      </td>
+      <td>
+        {{employee.contract_string}}
+      </td>
+      <td class="w-20">
+        {{employee.user.last_login}}
+      </td>
+      <td class="-centering">
+        <a class="btn btn-info" href="">編集</a>
+        <a class="btn btn-danger" href="">削除</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% include 'paginator.html' with page_object=employees%}
 </div>
 {% endblock %}
 {% block scripts %}
