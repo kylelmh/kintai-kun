@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from kintai_kun.views.custom_views import StaffView
 from kintai_kun.models import Employee
+from django.contrib.auth.models import User
 from kintai_kun.forms import EmployeeForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -58,3 +59,17 @@ class StaffEmployeeCreateView(StaffView):
       'employee_form': employee_form
     }
     return render(request, 'staff/employees/new.html', context=context)
+  
+  def post(self, request):
+    employee_form = EmployeeForm(request.POST)
+    if employee_form.is_valid():
+      data = employee_form.cleaned_data
+      pwd = data.pop('password')
+      contract = data.pop('contract')
+      user = User(**data)
+      user.set_password(pwd)
+      employee = Employee(user=user, contract=contract)
+      user.save()
+      employee.save()
+      messages.success(request, data)
+      return redirect('staff_employees')

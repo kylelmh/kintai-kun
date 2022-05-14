@@ -30,7 +30,7 @@ class StaffShiftForm(ShiftForm):
     fields = ['date', 'start_time', 'end_time', 'memo', 'status']
 
 class EmployeeForm(forms.Form):
-  def __init__(self, request=None, *args, **kwargs):
+  def __init__(self, *args, request=None, **kwargs):
     super().__init__(*args, **kwargs)
     if request and request.path == reverse('staff_employee_create'):
       self.fields['password'].required = True
