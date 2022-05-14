@@ -46,10 +46,10 @@ class StaffEmployeeEditView(StaffView):
       employee.contract = data['contract']
       user.save()
       employee.save()
-      messages.success(request, employee.user)
+      messages.success(request, f'{employee}が更新されました。')
       return redirect('staff_employees')
     else:
-      messages.error(request, 'シフト更新にエラーが発生しました。')
+      messages.error(request, 'エラーが発生しました。')
       return self.get(request)
 
 class StaffEmployeeCreateView(StaffView):
@@ -71,5 +71,8 @@ class StaffEmployeeCreateView(StaffView):
       employee = Employee(user=user, contract=contract)
       user.save()
       employee.save()
-      messages.success(request, data)
+      messages.success(request, f'従業員が追加されました。')
       return redirect('staff_employees')
+    else:
+      messages.error(request, 'エラーが発生しました。')
+      return self.get(request)
