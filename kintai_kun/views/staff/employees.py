@@ -76,3 +76,16 @@ class StaffEmployeeCreateView(StaffView):
     else:
       messages.error(request, 'エラーが発生しました。')
       return self.get(request)
+
+
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def delete_employee(request, pk):
+  employee = Employee.objects.get(pk=pk)
+  if employee.user.delete():
+    messages.success(request, f'{employee} が削除されました。')
+    return redirect('staff_employees')
+  else:
+    messages.error(request, 'エラーが発生しました。')
+    return redirect('staff_employees')
