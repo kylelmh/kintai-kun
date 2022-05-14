@@ -11,6 +11,7 @@ urlpatterns = [
     path('staff/shifts', StaffShiftsView.as_view(), name='staff_shifts'),
     path('staff/shifts/<int:pk>/edit', StaffShiftEditView.as_view(), name='staff_shift_edit'),
     path('staff/employees', StaffEmployeesView.as_view(), name='staff_employees'),
+    path('staff/employees/<int:pk>/edit', StaffEmployeeEditView.as_view(), name='staff_employee_edit'),
     path('employee_change_password', ViewHelpers.employee_change_password, name='employee_change_password'),
     path('staff/csv', StaffCSVView.as_view(), name='staff_csv'),
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from kintai_kun.views.custom_views import StaffView
 from kintai_kun.models import Employee
+from kintai_kun.forms import EmployeeForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
@@ -15,3 +16,38 @@ class StaffEmployeesView(StaffView):
       'employees' : Paginator(employees, 30).get_page(page_number)
     }
     return render(request, 'staff/employees/index.html', context=context)
+
+class StaffEmployeeEditView(StaffView):
+  def get(self, request, pk, *args, **kwargs):
+    employee = Employee.objects.get(pk=pk)
+    employee_form = EmployeeForm(initial = {
+      'contract': employee.contract,
+      'first_name':employee.user.first_name,
+      'last_name':employee.user.last_name,
+      'username': employee.user.username
+    })
+    context = {
+      'employee': employee,
+      'employee_form': employee_form
+    }
+    return render(request, 'staff/employees/edit.html', context=context)
+  
+  def post(self, request, pk, *args, **kwargs):
+    employee = Employee.objects.get(pk=pk)
+    user = employee.user
+    employee_form = EmployeeForm(request.POST)
+    if employee_form.is_valid():
+      data = employee_form.cleaned_data
+      user.first_name = data['first_name']
+      user.last_name = data['last_name']
+      user.username = data['username']
+      if data['password']:
+        user.set_password(data['password'])
+      employee.contract = data['contract']
+      user.save()
+      employee.save()
+      messages.success(request, employee.user)
+      return redirect('staff_employees')
+    else:
+      messages.error(request, 'シフト更新にエラーが発生しました。')
+      return self.get(request)

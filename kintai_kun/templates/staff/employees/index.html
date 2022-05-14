@@ -29,7 +29,7 @@
         {{employee.user.last_login}}
       </td>
       <td class="-centering">
-        <a class="btn btn-info" href="">編集</a>
+        <a class="btn btn-info" href="{% url 'staff_employee_edit' employee.pk %}">編集</a>
         <a class="btn btn-danger" href="">削除</a>
       </td>
     </tr>

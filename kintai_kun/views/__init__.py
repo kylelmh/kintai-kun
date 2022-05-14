@@ -14,4 +14,5 @@ globals()['StaffDakokuView'] = StaffDakokuView
 globals()['StaffShiftView'] = StaffShiftsView
 globals()['StaffShiftEditView'] = StaffShiftEditView
 globals()['StaffEmployeesView'] = StaffEmployeesView
+globals()['StaffEmployeeEditView'] = StaffEmployeeEditView
 globals()['ViewHelpers'] = ViewHelpers
