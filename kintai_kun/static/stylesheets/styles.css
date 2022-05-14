@@ -1,3 +1,11 @@
+.-f-left {
+  float: left;
+}
+
+.-f-right {
+  float: right;
+}
+
 .-inline {
   display: inline-block;
 }

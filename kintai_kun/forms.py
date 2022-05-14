@@ -3,7 +3,7 @@ from django import forms
 from .models import *
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-
+from django.urls import reverse
 
 class ShiftForm(forms.ModelForm):
   class Meta:
@@ -30,13 +30,17 @@ class StaffShiftForm(ShiftForm):
     fields = ['date', 'start_time', 'end_time', 'memo', 'status']
 
 class EmployeeForm(forms.Form):
+  def __init__(self, request=None, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    if request and request.path == reverse('staff_employee_create'):
+      self.fields['password'].required = True
+
   contract = forms.ChoiceField(choices = [
     ('1','パート'),
     ('2', '契約・業務委託'),
     ('3', '正社員')
-    ]
-  )
+    ])
   last_name = forms.CharField(label='姓')
   first_name = forms.CharField(label='名')
   username = forms.CharField(label='ユーザー名', max_length=149)
-  password = forms.CharField(required=False, widget=forms.PasswordInput)
+  password = forms.CharField(label='パスワード', required=False, widget=forms.PasswordInput)

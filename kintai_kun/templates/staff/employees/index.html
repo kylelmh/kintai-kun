@@ -4,10 +4,11 @@
 {% block content %}
 {% include 'header.html' %}
 <div class="mt-4">
-  <form class="search-box" action="" method="get">
+  <form class="search-box -f-left" action="" method="get">
     <input type="text" name="name" placeholder="名前">
-    <button class='btn btn-primary' type="submit">検索</button>
+    <button class="btn btn-primary" type="submit">検索</button>
   </form>
+  <a href="{% url 'staff_employee_create' %}" class="btn btn-success -f-right">従業員作成</a>
 </div>
 <div class="-centering">
   <table class="table">

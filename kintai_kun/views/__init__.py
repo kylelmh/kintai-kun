@@ -15,4 +15,5 @@ globals()['StaffShiftView'] = StaffShiftsView
 globals()['StaffShiftEditView'] = StaffShiftEditView
 globals()['StaffEmployeesView'] = StaffEmployeesView
 globals()['StaffEmployeeEditView'] = StaffEmployeeEditView
+globals()['StaffEmployeeCreateView'] = StaffEmployeeCreateView
 globals()['ViewHelpers'] = ViewHelpers

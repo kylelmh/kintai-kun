@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
 
-
 class StaffEmployeesView(StaffView):
   def get(self, request):
     employees = Employee.objects.all().order_by('user__last_name')
@@ -51,3 +50,11 @@ class StaffEmployeeEditView(StaffView):
     else:
       messages.error(request, 'シフト更新にエラーが発生しました。')
       return self.get(request)
+
+class StaffEmployeeCreateView(StaffView):
+  def get(self, request):
+    employee_form = EmployeeForm(request=request)
+    context = {
+      'employee_form': employee_form
+    }
+    return render(request, 'staff/employees/new.html', context=context)
