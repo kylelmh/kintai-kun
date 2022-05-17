@@ -48,8 +48,8 @@ class StaffCSVView(StaffView):
     timestamps = WorkTimestamp.objects.filter(
       created_on__year = timezone.now().year,
       created_on__month = month
-    ).order_by('employee', 'created_on')
+    ).order_by('employee__user__last_name', 'created_on')
     writer = csv.writer(response)
     for ts in timestamps:
-      writer.writerow([ts.employee, ts.date, ts.local_time, ts.stamp_string])
+      writer.writerow([f'{ts.employee.user.last_name}, {ts.employee.user.first_name}', ts.date, ts.local_time, ts.stamp_string])
     return(response)
