@@ -71,11 +71,6 @@ class WorkTimestamp(TimeStampedModel):
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
   memo = models.CharField(default='',max_length=255)
   date = models.DateField(default=timezone.now, editable=False)
-  class Meta:
-    constraints = [
-      models.UniqueConstraint(fields=['employee', 'date', 'stamp_type'], name='unique_stamp_date')
-    ]
-  
   def __str__(self):
     return f'{self.employee}: {self.created_on.strftime("%Y-%m-%d %H:%M:%S")}, {self.stamp_string}'
 
