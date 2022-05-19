@@ -18,14 +18,15 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 function init(){
-  $('#w_start').click(()=>{dakoku(1)})
-  $('#w_end').click(()=>{dakoku(2)})
-  $('#b_start').click(()=>{dakoku(3)})
-  $('#b_end').click(()=>{dakoku(4)})
+  $('#w_start').click((e)=>{dakoku(e,1)})
+  $('#w_end').click((e)=>{dakoku(e,2)})
+  $('#b_start').click((e)=>{dakoku(e,3)})
+  $('#b_end').click((e)=>{dakoku(e,4)})
   startTime()
 }
 
-function dakoku(dakoku_type){
+function dakoku(e,dakoku_type){
+  e.target.setAttribute('disabled', true)
   $.ajax(
     {
         'type': 'POST',
@@ -42,7 +43,9 @@ function dakoku(dakoku_type){
     }
   ).fail( () => {
       alert('打刻失敗しました。')
-  })
+      e.target.removeAttribute('disabled')
+    }
+  )
 }
 
 function startTime() {
