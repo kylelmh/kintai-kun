@@ -4,10 +4,10 @@ from kintai_kun.views import *
 from kintai_kun.views_old import employee_change_password
 
 urlpatterns = [
-    path('', WTView.as_view(), name='dakoku'),
+    path('', WTView.as_view(), name='worktimestamp'),
     path('shifts', ShiftsView.as_view(), name='shifts'),
     path('shifts/<int:pk>/edit', ShiftEditView.as_view(), name='shift_edit'),
-    path('staff', StaffWTView.as_view(), name='dakoku_staff'),
+    path('staff', StaffWTView.as_view(), name='worktimestamp_staff'),
     path('staff/shifts', StaffShiftsView.as_view(), name='staff_shifts'),
     path('staff/shifts/<int:pk>/edit', StaffShiftEditView.as_view(), name='staff_shift_edit'),
     path('staff/employees', StaffEmployeesView.as_view(), name='staff_employees'),

@@ -3,7 +3,7 @@
   <div class="navbar w-100 order-1">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'dakoku' %}">打刻</a>
+        <a class="nav-link" href="{% url 'worktimestamp' %}">打刻</a>
       </li>
       {% if request.user.employee.contract == 1 %}
       <li class="nav-item">
@@ -14,7 +14,7 @@
       <li class="nav-item dropdown">
         <a class="dropdown-toggle nav-link" data-toggle="dropdown">打刻管理</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'dakoku_staff' %}">打刻履歴一覧</a>
+          <a class="dropdown-item" href="{% url 'worktimestamp_staff' %}">打刻履歴一覧</a>
           <a class="dropdown-item" href="#">打刻申請一覧</a>
         </div>
       </li>
