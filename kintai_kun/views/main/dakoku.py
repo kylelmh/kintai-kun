@@ -22,7 +22,7 @@ class DakokuView(UserView):
       'timestamps': Paginator(timestamps, 20).get_page(page_number),
       'month': month,
     }
-    return render(request, 'main/index.html', context=context)
+    return render(request, 'dakoku/index.html', context=context)
 
   def post(self, request, *args, **kwargs):
     stamp_type = request.POST.get('stamp_type')

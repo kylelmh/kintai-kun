@@ -29,7 +29,7 @@ class StaffDakokuView(StaffView):
       'timestamps': paginator.get_page(page_number),
       'month': month
     }
-    return render(request, 'staff/main/index.html', context=context)
+    return render(request, 'staff/dakoku/index.html', context=context)
 
   def search_work_timestamp_by_name(self, wts, name):
     wts = wts.filter( Q(employee__user__first_name__icontains=name) |
