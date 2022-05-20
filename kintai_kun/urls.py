@@ -7,7 +7,7 @@ urlpatterns = [
     path('', WTView.as_view(), name='worktimestamp'),
     path('shifts', ShiftsView.as_view(), name='shifts'),
     path('shifts/<int:pk>/edit', ShiftEditView.as_view(), name='shift_edit'),
-    path('staff', StaffWTView.as_view(), name='worktimestamp_staff'),
+    path('staff/worktimestamp', StaffWTView.as_view(), name='staff_wt'),
     path('staff/shifts', StaffShiftsView.as_view(), name='staff_shifts'),
     path('staff/shifts/<int:pk>/edit', StaffShiftEditView.as_view(), name='staff_shift_edit'),
     path('staff/employees', StaffEmployeesView.as_view(), name='staff_employees'),
@@ -16,4 +16,5 @@ urlpatterns = [
     path('staff/employees/<int:pk>/delete', delete_employee, name='staff_employee_delete'),
     path('employee_change_password', ViewHelpers.employee_change_password, name='employee_change_password'),
     path('staff/csv', StaffCSVView.as_view(), name='staff_csv'),
+    path('staff/worktimestamp_change', StaffWTChangeView.as_view(), name='staff_wt_change')
 ]

@@ -11,11 +11,12 @@
       </li>
       {% endif %}
       {% if request.user.is_staff %}
+      <li class="nav-item navbar-spacer"></li>
       <li class="nav-item dropdown">
         <a class="dropdown-toggle nav-link" data-toggle="dropdown">打刻管理</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'worktimestamp_staff' %}">打刻履歴一覧</a>
-          <a class="dropdown-item" href="#">打刻申請一覧</a>
+          <a class="dropdown-item" href="{% url 'staff_wt' %}">打刻履歴一覧</a>
+          <a class="dropdown-item" href="{% url 'staff_wt_change' %}">打刻申請一覧</a>
         </div>
       </li>
       <li class="nav-item">

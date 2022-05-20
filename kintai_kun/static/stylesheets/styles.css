@@ -18,6 +18,12 @@
   height: 100vh;
 }
 
+.navbar-spacer {
+  border-left: #007bff50 solid 1px;
+  margin-left: 12px;
+  padding-left: 12px
+}
+
 .login-box {
   padding: 25px;
   border-radius: 5%;
