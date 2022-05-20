@@ -5,6 +5,7 @@ from kintai_kun.views_old import employee_change_password
 
 urlpatterns = [
     path('', WTView.as_view(), name='worktimestamp'),
+    path('worktimestamp_change/new', WTChangeCreateView.as_view(), name='worktimestamp_change'),
     path('shifts', ShiftsView.as_view(), name='shifts'),
     path('shifts/<int:pk>/edit', ShiftEditView.as_view(), name='shift_edit'),
     path('staff/worktimestamp', StaffWTView.as_view(), name='staff_wt'),

@@ -1,0 +1,28 @@
+<div>
+  <table class="table">
+    <tr>
+      <th>
+        <form method="get">
+          打刻履歴
+          (<input type="number" min="1" max="12" name="month" value="{{month}}" {% if disabled %} disabled="" {% endif %}>月)
+        </form>
+      </th>
+      <th>メモ</th>
+      <th></th>
+    </tr>
+    {% for ts in timestamps%}
+    <tr>
+      <td>
+        {{ts.created_on}}
+      </td>
+      <td>
+        {{ ts.memo }}
+      </td>
+      <td>
+        {{ ts.stamp_string }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% include 'paginator.html' with page_object=timestamps%}
+</div>
