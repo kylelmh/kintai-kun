@@ -1,6 +1,7 @@
 from .custom_views import *
 from .main.worktimestamp import *
 from .main.shifts import *
+from .main.worktimestamp_change import *
 from .staff.worktimestamp import *
 from .staff.worktimestamp_change import *
 from .staff.shifts import *
@@ -9,6 +10,7 @@ from .staff.employees import *
 globals()['UserView'] = UserView
 globals()['StaffView'] = StaffView
 globals()['WTView'] = WTView
+globals()['WTChangeCreateView'] = WTChangeCreateView
 globals()['ShiftsView'] = ShiftsView
 globals()['ShiftEditView'] = ShiftEditView
 globals()['StaffWTView'] = StaffWTView
