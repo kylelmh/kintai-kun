@@ -20,6 +20,7 @@ class Employee(TimeStampedModel):
 
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   contract = models.IntegerField(choices=ContractType.choices)
+  is_employed = models.BooleanField(default=True)
 
   def contract_string(self):
     contracts = ['パート', '業務委託', '正社員']
@@ -82,3 +83,18 @@ class WorkTimestamp(TimeStampedModel):
   @property
   def local_time(self):
     return timezone.localtime(self.created_on).time()
+
+class WorkTimestampChange(TimeStampedModel):
+  class Methods(models.TextChoices):
+    CREATE = 'POST'
+    UPDATE = 'PUT'
+    DELETE = 'DELETE'
+  original_worktimestamp = models.ForeignKey('WorkTimestamp', on_delete=models.SET_NULL, null=True, blank=True)
+  approving_employee = models.ForeignKey('Employee', on_delete=models.PROTECT, null=True, blank=True)
+  new_stamp_type = models.IntegerField(choices=WorkTimestamp.StampType.choices)
+  new_stamp_time = models.DateTimeField(default=timezone.now)
+  method = models.TextField(choices = Methods.choices)
+
+  @property
+  def is_approved(self):
+    return self.approving_employee is not None
