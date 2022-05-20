@@ -32,6 +32,6 @@ class ViewHelpers():
         messages.error(request, 'エラーが発生しました。')
     else:
       form = PasswordChangeForm(request.user)
-    return render(request, 'worktimestamp/password_change.html', {
+    return render(request, 'main/worktimestamp/password_change.html', {
       'form': form
     })

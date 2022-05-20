@@ -31,7 +31,7 @@ class ShiftsView(UserView):
       'shifts' : Paginator(shifts, 10).get_page(page_number),
       'month' : month
     }
-    return render(request, 'shifts/index.html', context=context)
+    return render(request, 'main/shifts/index.html', context=context)
   
   def post(self, request, *args, **kwargs):
     shift_form = ShiftForm(request.POST)
@@ -62,7 +62,7 @@ class ShiftEditView(UserView):
       'shift_form': shift_form,
       'shifts': [shift],
     }
-    return render(request, 'shifts/edit.html', context=context)
+    return render(request, 'main/shifts/edit.html', context=context)
   
   def post(self, request, pk, *args, **kwargs):
     shift = Shift.objects.get(pk=pk)
