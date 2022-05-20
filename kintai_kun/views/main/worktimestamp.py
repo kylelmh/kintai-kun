@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 import json
 
-class DakokuView(UserView):
+class WTView(UserView):
   def get(self, request, *args, **kwargs):
     month = request.GET.get('month')
     page_number = request.GET.get('page')
@@ -22,7 +22,7 @@ class DakokuView(UserView):
       'timestamps': Paginator(timestamps, 20).get_page(page_number),
       'month': month,
     }
-    return render(request, 'dakoku/index.html', context=context)
+    return render(request, 'worktimestamp/index.html', context=context)
 
   def post(self, request, *args, **kwargs):
     stamp_type = request.POST.get('stamp_type')

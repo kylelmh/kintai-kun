@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.http import HttpResponse
 import csv
 
-class StaffDakokuView(StaffView):
+class StaffWTView(StaffView):
   def dispatch(self, *args, **kwargs):
     return super().dispatch(*args, **kwargs)
   
@@ -29,7 +29,7 @@ class StaffDakokuView(StaffView):
       'timestamps': paginator.get_page(page_number),
       'month': month
     }
-    return render(request, 'staff/dakoku/index.html', context=context)
+    return render(request, 'staff/worktimestamp/index.html', context=context)
 
   def search_work_timestamp_by_name(self, wts, name):
     wts = wts.filter( Q(employee__user__first_name__icontains=name) |
