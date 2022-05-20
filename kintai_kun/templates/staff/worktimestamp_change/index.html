@@ -1,46 +1,43 @@
-
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block content %}
-<div class="mt-4"> 
-<form class="search-box -inline" action="" method="get">
-    <input type="text" name="name" placeholder="名前">
-    <button class='btn btn-primary' type="submit">検索</button>
-    (<input type="number" min="1" max="12" name="month" value="{{month}}">月分)
+<form class="search-box" action="" method="get">
+  <input type="text" name="name" placeholder="名前">
+  <button class='btn btn-primary' type="submit">検索</button>
+  (<input type="number" min="1" max="12" name="month" value="{{month}}">月分)
 </form>
-<a id="output_csv" class="btn btn-success -inline" href="/staff/csv?month={{month}}">CSV 出力</a>
-</div>
-<div>
-  <table class="table">
-    <tr>
-      <th>従業員名</th>
-      <th>
-          打刻履歴
-      </th>
-      <th>メモ</th>
-      <th></th>
-    </tr>
-    {% for ts in timestamps%}
-    <tr>
-      <td>
-        {{ts.employee.user.last_name}} {{ts.employee.user.first_name}}
-      </td>
-      <td>
-        {{ts.created_on}} - {{ ts.stamp_string }}
-      </td>
-      <td class="w-20">
-        {{ts.memo}}
-        <!-- <input type="text" value="{{ts.memo}}"> -->
-      </td>
-      <td class="-centering">
-        <a class="btn btn-info" href="/admin/kintai_kun/worktimestamp/{{ts.id}}/change">編集</a>
-        <a class="btn btn-danger" href="/admin/kintai_kun/worktimestamp/{{ts.id}}/delete">削除</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+<div class="-centering">
+  <div>
+    <table class="table">
+      <tr>
+        <th>
+          <div class="form-check">
+            <input class="form-check-input" data-group="wtc" type="checkbox" id="main_cb">
+          </div>
+        </th>
+        <th>
+
+        </th>
+      </tr>
+      {% for wtc in wt_changes %}
+      <tr>
+        <td>
+          <div class="form-check">
+            <input class="form-check-input" data-group="wtc" type="checkbox" name="wtc[]" value="{{ wtc.pk }}">
+          </div>
+        </td>
+        <td>
+          {{wtc}}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% include 'paginator.html' with page_object=shifts%}
+  </div>
 </div>
 {% endblock %}
 {% block scripts %}
 {% load static %}
-<script src="{% static 'scripts/staff/main.js' %}"></script>
+<!-- <script src="{% static 'scripts/staff/shifts.js' %}"></script> -->
 {% endblock %}
