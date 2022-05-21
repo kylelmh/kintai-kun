@@ -73,3 +73,7 @@ a.disabled {
   color: gray;
   pointer-events: none;
 }
+
+.table tr:hover {
+  background-color: #ffc;
+}
