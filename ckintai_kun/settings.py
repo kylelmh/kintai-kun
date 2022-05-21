@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-VITE_DIR = BASE_DIR / 'frontend/src'
+DJANGO_VITE_ASSETS_PATH = BASE_DIR / 'frontend/dist'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'django_vite'
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 STATICFILES_DIRS = [
-    VITE_DIR
+    DJANGO_VITE_ASSETS_PATH
 ]
 # COMPRESS_OFFLINE = True
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'

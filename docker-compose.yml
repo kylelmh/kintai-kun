@@ -15,6 +15,7 @@ services:
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
+      - vite-dist:/code/frontend/dist
     ports:
       - "8000:8000"
     environment:
@@ -36,7 +37,9 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/vite
-      - vite-frontend:/vite/node_modules
+      - vite-nodes:/vite/node_modules
+      - vite-dist:/vite/dist
 
 volumes:
-  vite-frontend:
+  vite-dist:
+  vite-nodes:
