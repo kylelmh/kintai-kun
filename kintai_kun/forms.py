@@ -44,7 +44,3 @@ class EmployeeForm(forms.Form):
   first_name = forms.CharField(label='名')
   username = forms.CharField(label='ユーザー名', max_length=149)
   password = forms.CharField(label='パスワード', required=False, widget=forms.PasswordInput)
-
-class WTChangeForm(forms.Form):
-  new_stamp_type = forms.ChoiceField(choices=WorkTimestamp.StampType.choices, widget=forms.RadioSelect)
-  new_stamp_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type':'datetime-local'}))
