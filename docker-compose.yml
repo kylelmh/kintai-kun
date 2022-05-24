@@ -28,3 +28,15 @@ services:
       - DEBUG=1
     depends_on:
       - db
+  vite:
+    build:
+      context: frontend
+    command: npm run dev --port=3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/vite
+      - vite-frontend:/vite/node_modules
+
+volumes:
+  vite-frontend:
