@@ -13,10 +13,10 @@
 </div>
   {% include 'main/worktimestamp/worktimestamp_table.html'%}
 <div>
-
 </div>
 {% endblock %}
 {% block scripts %}
 {% load static %}
   <script src="{% static 'scripts/main.js' %}"></script>
+  {% vite_asset 'src/App.vue' %}
 {% endblock %}
