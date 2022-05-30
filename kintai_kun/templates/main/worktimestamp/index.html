@@ -5,6 +5,7 @@
   <div id="datetime">
   </div>
 </div>
+<div id="app"></div>
 <div class="ml-auto mr-auto w-100 -centering">
   <button id='w_start' class="btn btn-success -large">出勤</button>
   <button id='b_start' class="btn btn-info -large">休憩</button>
@@ -18,5 +19,4 @@
 {% block scripts %}
 {% load static %}
   <script src="{% static 'scripts/main.js' %}"></script>
-  {% vite_asset 'src/App.vue' %}
 {% endblock %}
