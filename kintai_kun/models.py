@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -71,6 +72,7 @@ class WorkTimestamp(TimeStampedModel):
   employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
   memo = models.CharField(default='',max_length=255)
   date = models.DateField(default=timezone.now, editable=False)
+  created_on = models.DateTimeField(default=timezone.now)
   def __str__(self):
     return f'{self.employee}: {self.created_on.strftime("%Y-%m-%d %H:%M:%S")}, {self.stamp_string}'
 
