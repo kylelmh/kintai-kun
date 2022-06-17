@@ -12,6 +12,7 @@
 <div class="-centering">
   <table class="table">
     <tr>
+      <th>user_id</th>
       <th>従業員名</th>
       <th></th>
       <th>最終ログイン</th>
@@ -19,6 +20,7 @@
     </tr>
     {% for employee in employees %}
     <tr>
+      <td>{{employee.user.pk}}</td>      
       <td>
         {{employee.user.last_name}} {{employee.user.first_name}}
       </td>
