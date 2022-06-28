@@ -10,6 +10,7 @@
 <a id="output_csv" class="btn btn-success -inline" href="/staff/csv?month={{month}}">CSV 出力</a>
 </div>
 <div>
+  {% include 'paginator.html' with page_object=timestamps%}
   <table class="table">
     <tr>
       <th>従業員名</th>
@@ -38,6 +39,7 @@
     </tr>
     {% endfor %}
   </table>
+  {% include 'paginator.html' with page_object=timestamps%}
 </div>
 {% endblock %}
 {% block scripts %}

@@ -1,8 +1,9 @@
+{% load paginator_extras %}
 <div>
   <ul class="pagination">
     {% for page_number in page_object.paginator.page_range %}
     <li class="page-item {% if page_number == page_object.number %}active{% endif %}">
-      <a class="page-link" href="?page={{page_number}}">{{page_number}}</a>
+      <a class="page-link" href="?{% url_replace page=page_number %}">{{page_number}}</a>
     </li>
     {% endfor %}
   </ul>
