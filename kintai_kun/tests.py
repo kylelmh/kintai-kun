@@ -1,8 +1,5 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 from kintai_kun.models import *
-from django.utils import timezone
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 
