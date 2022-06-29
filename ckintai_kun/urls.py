@@ -20,5 +20,4 @@ urlpatterns = [
     path('', include('kintai_kun.urls')),
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    path('api/', include('api.urls'))
 ]
