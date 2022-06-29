@@ -28,3 +28,12 @@ services:
       - DEBUG=1
     depends_on:
       - db
+  frontend:
+    build: frontend
+    restart: always
+    command: yarn run dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/code
+      - ./frontend/node_modules:/code/node_modules
