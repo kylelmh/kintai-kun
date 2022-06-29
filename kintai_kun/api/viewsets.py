@@ -11,12 +11,12 @@ class WorkTimestampViewSet(viewsets.ModelViewSet):
   serializer_class = WorkTimestampSerializer
 
   def get_queryset(self):
-    queryset = WorkTimestamp.objects.filter(created_on__month=month).order_by('-created_on')
+    queryset = WorkTimestamp.objects
     params = self.request.query_params
     month = parse_month(params)
     if 'name' in params:
       queryset = self.search_employee_obj_by_name(queryset, params['name'])
-    return queryset
+    return queryset.filter(created_on__month=month).order_by('-created_on')
 
 class UserWorkTimestampViewSet(viewsets.ModelViewSet):
   serializer_class = WorkTimestampSerializer
