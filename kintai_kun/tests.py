@@ -11,7 +11,7 @@ class WorkTimestampFetch(TestCase):
     for i in range(1,5):
       WorkTimestamp.objects.create(employee_id=1, stamp_type=1)
     with self.assertNumQueries(3):
-      q = WorkTimestamp.objects.all().prefetch_related('employee__user')
+      q = WorkTimestamp.objects.all()
       q.filter(employee__user__first_name="K", created_on__month=timezone.now().month).order_by('-created_on')
       print(q)
 

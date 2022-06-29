@@ -11,7 +11,13 @@ class TimeStampedModel(models.Model):
   class Meta:
     abstract = True
 
+class EmployeeManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().prefetch_related('user')
+
 class Employee(TimeStampedModel):
+  _base_manager = EmployeeManager
+  objects = EmployeeManager()
   class ContractType(models.IntegerChoices):
     PARTTIME = 1
     CONTRACT = 2
@@ -62,7 +68,14 @@ class Shift(TimeStampedModel):
       dt -= 3600
     return dt/3600
 
+
+class WorkTimestampManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().prefetch_related('employee__user')
+
 class WorkTimestamp(TimeStampedModel):
+  _base_manager = WorkTimestampManager
+  objects = WorkTimestampManager()
   class StampType(models.IntegerChoices):
     WORK_START = 1
     WORK_END = 2
