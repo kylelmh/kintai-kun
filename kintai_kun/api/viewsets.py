@@ -1,7 +1,6 @@
 from kintai_kun.api.serializers import WorkTimestampSerializer
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework.response import Response
 from kintai_kun.api.serializers import *
 from kintai_kun.models import *
 from django.db.models import Q
@@ -12,7 +11,7 @@ class WorkTimestampViewSet(viewsets.ModelViewSet):
   serializer_class = WorkTimestampSerializer
 
   def get_queryset(self):
-    queryset = WorkTimestamp.objects.all().prefetch_related('employee__user') 
+    queryset = WorkTimestamp.objects.all()
     params = self.request.query_params
     month = timezone.now().month
 
@@ -28,3 +27,16 @@ class WorkTimestampViewSet(viewsets.ModelViewSet):
     wts = wts.filter( Q(employee__user__first_name__icontains=name) |
                       Q(employee__user__last_name__icontains=name))
     return wts
+
+class UserWorkTimestampViewSet(viewsets.ModelViewSet):
+  permission_classes = [permissions.IsAuthenticated]
+  serializer_class = WorkTimestampSerializer
+
+  def get_queryset(self):
+    params = self.request.query_params
+    month = timezone.now().month
+
+    if 'month' in params:
+      month = params['month']
+
+    return WorkTimestamp.objects.filter(created_on__month=month, employee__user=self.request.user)
