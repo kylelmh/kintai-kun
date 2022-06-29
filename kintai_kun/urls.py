@@ -3,6 +3,7 @@ from django.urls import path, include
 from kintai_kun.views import *
 from kintai_kun.views_old import employee_change_password
 
+
 urlpatterns = [
     path('', DakokuView.as_view(), name='dakoku'),
     path('shifts', ShiftsView.as_view(), name='shifts'),
@@ -16,5 +17,4 @@ urlpatterns = [
     path('staff/employees/<int:pk>/delete', delete_employee, name='staff_employee_delete'),
     path('employee_change_password', ViewHelpers.employee_change_password, name='employee_change_password'),
     path('staff/csv', StaffCSVView.as_view(), name='staff_csv'),
-    path('api-auth/', include('rest_framework.urls'))
 ]

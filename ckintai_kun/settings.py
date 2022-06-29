@@ -37,6 +37,7 @@ ALLOWED_HOSTS.extend(
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'kintai_kun.apps.KintaiKunConfig',
     'django.contrib.admin',
     'django.contrib.auth',
