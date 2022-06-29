@@ -1,10 +1,8 @@
 from django.urls import path, include
-
 from kintai_kun.views import *
-from kintai_kun.views_old import employee_change_password
-
 
 urlpatterns = [
+    path('api/', include('kintai_kun.api.urls')),
     path('', DakokuView.as_view(), name='dakoku'),
     path('shifts', ShiftsView.as_view(), name='shifts'),
     path('shifts/<int:pk>/edit', ShiftEditView.as_view(), name='shift_edit'),
