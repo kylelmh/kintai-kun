@@ -165,3 +165,23 @@ CRISPY_TEMPLATE_PACK='bootstrap4'
 # SESSION_COOKIE_SECURE =True
 # CSRF_COOKIE_SECURE=True
 CSRF_TRUSTED_ORIGINS = os.environ.get('TRUSTED_ORIGIN')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}
