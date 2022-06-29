@@ -3,40 +3,53 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from kintai_kun.api.serializers import *
 from kintai_kun.models import *
-from django.db.models import Q
-from django.utils import timezone
+from kintai_kun.api.helpers import *
+import django_filters
 
 class WorkTimestampViewSet(viewsets.ModelViewSet):
   permission_classes = [permissions.IsAdminUser]
   serializer_class = WorkTimestampSerializer
 
   def get_queryset(self):
-    queryset = WorkTimestamp.objects.all()
+    queryset = WorkTimestamp.objects.filter(created_on__month=month).order_by('-created_on')
     params = self.request.query_params
-    month = timezone.now().month
-
-    if 'month' in params:
-      month = params['month']
-
+    month = parse_month(params)
     if 'name' in params:
-      queryset = self.search_work_timestamp_by_name(queryset, params['name'])
-
-    return queryset.filter(created_on__month=month).order_by('-created_on')
-
-  def search_work_timestamp_by_name(self, wts, name):
-    wts = wts.filter( Q(employee__user__first_name__icontains=name) |
-                      Q(employee__user__last_name__icontains=name))
-    return wts
+      queryset = self.search_employee_obj_by_name(queryset, params['name'])
+    return queryset
 
 class UserWorkTimestampViewSet(viewsets.ModelViewSet):
-  permission_classes = [permissions.IsAuthenticated]
   serializer_class = WorkTimestampSerializer
 
   def get_queryset(self):
     params = self.request.query_params
-    month = timezone.now().month
-
-    if 'month' in params:
-      month = params['month']
-
+    month = parse_month(params)
     return WorkTimestamp.objects.filter(created_on__month=month, employee__user=self.request.user)
+
+class ShiftViewSet(viewsets.ModelViewSet):
+  permission_classes = [permissions.IsAdminUser]
+  serializer_class = ShiftSerializer
+
+  def get_queryset(self):
+    params = self.request.query_params
+    month = parse_month(params)
+    queryset = Shift.objects.filter(date__month=month)
+    if 'name' in params:
+      queryset = search_employee_obj_by_name(queryset, params['name'])
+    return queryset
+
+class UserShiftViewSet(viewsets.ModelViewSet):
+  serializer_class = ShiftSerializer
+
+  def get_queryset(self):
+    params = self.request.query_params
+    month = parse_month(params)
+    queryset = Shift.objects.filter(date__month=month, employee__user=self.request.user)
+    return queryset
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+  permission_classes = [permissions.IsAdminUser]
+  serializer_class = EmployeeSerializer
+  queryset = Employee.objects.all()
+  filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+ 

@@ -17,3 +17,11 @@ class WorkTimestampSerializer(serializers.ModelSerializer):
   class Meta:
     model = WorkTimestamp
     fields = ['employee','created_on', 'memo', 'stamp_type']
+
+
+class ShiftSerializer(serializers.ModelSerializer):
+  employee = serializers.StringRelatedField()
+
+  class Meta:
+    model = Shift
+    fields = ['employee', 'status', 'date', 'start_time', 'end_time', 'memo']
