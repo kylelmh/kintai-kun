@@ -16,3 +16,13 @@ class WorkTimestampFetch(TestCase):
       print(q)
 
     self.assertEqual(len(q), 4)
+
+class RESTAuth(TestCase):
+  def test_user_permissions(self):
+    pass
+
+  def test_anon_permissions(self):
+    pass
+
+  def test_root_permissions(self):
+    pass
