@@ -42,7 +42,12 @@ class RestAuth(APITestCase):
   def setUp(self):
     self.root = User.objects.create_superuser(username="root", password="1234", )
     self.user = User.objects.create_user(username="user", password="1234")
-
+    self.user_b = User.objects.create_user(username="userb")
+    self.employee = Employee.objects.create(user=self.user, contract=1)
+    self.employee_b = Employee.objects.create(user=self.user_b, contract=2)
+    for i in range(1,5):
+      WorkTimestamp.objects.create(employee=self.employee, stamp_type=i)
+  
   def test_user_permissions(self):
     c = self.client
     c.force_login(self.user)
@@ -51,7 +56,10 @@ class RestAuth(APITestCase):
     self.assertEqual(c.get(APIS['shifts']).status_code, 403) 
     self.assertEqual(c.get(APIS['user_shifts']).status_code, 200) 
     self.assertEqual(c.get(APIS['employees']).status_code, 403)
-   
+
+  def test_cross_user(self):
+    pass
+
   def test_anon_permissions(self):
     c = self.client
     self.assertEqual(c.get('/api/').status_code, 403)

@@ -13,6 +13,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 class WorkTimestampSerializer(serializers.ModelSerializer):
   employee = serializers.StringRelatedField()
+  created_on = serializers.ReadOnlyField()
 
   class Meta:
     model = WorkTimestamp
