@@ -31,7 +31,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG')))
-ALLOWED_HOSTS = []
+
+INTERNAL_IPS = ['web']
+ALLOWED_HOSTS = ['web']
 ALLOWED_HOSTS.extend(
     filter(
         None,
